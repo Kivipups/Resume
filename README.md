@@ -11,17 +11,17 @@
 <p dir="auto">Создание документов с использованием Python'а - https://drive.google.com/drive/folders/1a4WBNxhq0irLaOeuomf0kR4AV4kV-rZU?usp=sharing</p>
 </li>
 <li>
-<p dir="auto">TG бот</p>
+<p dir="auto">TG бот - ссылка на папку</p>
 </li>
 </ul>
 
 <h1 tabindex="-1" class="heading-element" dir="auto">Twine</h1>
 <ul dir="auto">
 <li>
-<p dir="auto">Сборка ПК</p>
+<p dir="auto">Сборка ПК - https://kivipups.github.io/Hardware-Architecture/28.12.24.html</p>
 </li>
 <li>
-<p dir="auto">Алгоритмизация, автоматизация создания документа</p>
+<p dir="auto">Алгоритмизация, автоматизация создания документа - https://manicom666.github.io/Nizov-Denis-Algorithmization/</p>
 </li>
 
 <h1 tabindex="-1" class="heading-element" dir="auto">Теория</h1>

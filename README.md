@@ -27,33 +27,33 @@
 <h1 tabindex="-1" class="heading-element" dir="auto">Теория</h1>
 <ul dir="auto">
 <li>
-<p dir="auto">База данных</p>
+<p dir="auto">База данных - https://docs.google.com/document/d/14fo6lsIvCwX52dnX-t4s7cNqjlb_o-SgkcstyQQtiyE/edit?usp=sharing</p>
 </li>
 <li>
-<p dir="auto">История операционных систем</p>
+<p dir="auto">История операционных систем - https://docs.google.com/document/d/1HmwZbtCgW_6uOMW5zVFEdNKscVqwvS13C-w2XRP6iZA/edit?usp=sharing</p>
 </li>
 <li>
-<p dir="auto">GIT алгоритмизация</p>
+<p dir="auto">GIT алгоритмизация - https://docs.google.com/document/d/1kGVV50_xqjU4yuVv9PJgcf4veSFau6pS27OZlMMw0r0/edit?usp=sharing</p>
 </li>
 </ul>
 
 <h1 tabindex="-1" class="heading-element" dir="auto">Задания</h1>
 <ul dir="auto">
 <li>
-<p dir="auto">ВПР</p>
+<p dir="auto">ВПР - https://drive.google.com/drive/u/2/folders/105d4cgN8pEoIbb8pTcKcJ68IDNeQQEFx</p>
 </li>
 <li>
-<p dir="auto">Практикум</p>
+<p dir="auto">Практикум - https://docs.google.com/document/d/1KqmxH64nlAnt5ScVUu4QS4vIQ4lUdpLZMaU9KvneAPo/edit?usp=sharing</p>
 </li>
 <li>
-<p dir="auto">Сообщение по фильму</p>
+<p dir="auto">Сообщение по фильму - https://docs.google.com/presentation/d/19KXRW-cbVYyglAUnFaA8_cUm-AgmQL72BBvstbF7FyQ/edit?usp=sharing</p>
 </li>
 </ul>
 <li>
-<p dir="auto">Базы данных</p>
+<p dir="auto">Базы данных - https://drive.google.com/drive/folders/1OBPitAf-3rZbV5cOy5UAX9uO5uA6gnVj?usp=sharing</p>
 </li>
 <li>
-<p dir="auto">OWASP</p>
+<p dir="auto">OWASP - Тут будет ссылка</p>
 </li>
 </ul>
 

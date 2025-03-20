@@ -5,10 +5,10 @@
 <h1 tabindex="-1" class="heading-element" dir="auto">Проекты</h1>
 <ul dir="auto">
 <li>
-<p dir="auto">Доска с заданиями</p>
+<p dir="auto">Доска с заданиями - https://ru.yougile.com/board/npmqx9pgvjwm</p>
 </li>
 <li>
-<p dir="auto">Создание документов с использованием Python'а</p>
+<p dir="auto">Создание документов с использованием Python'а - https://drive.google.com/drive/folders/1a4WBNxhq0irLaOeuomf0kR4AV4kV-rZU?usp=sharing</p>
 </li>
 <li>
 <p dir="auto">TG бот</p>

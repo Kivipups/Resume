@@ -1,7 +1,11 @@
 <div id="header" align="center">
   <img src="https://github.com/public/moarcats/blob/master/cats/92.gif"/>
 </div>
-
+<h1 tabindex="-1" class="heading-element" dir="auto">Курсовой проект</h1>
+<ul dir="auto">
+<li>
+<p dir="auto">https://drive.google.com/drive/folders/1h_gNo0p_ws9RJ36XRAttssTSyfFGgd6g?usp=drive_link</p>
+</li>
 <h1 tabindex="-1" class="heading-element" dir="auto">Проекты</h1>
 <ul dir="auto">
 <li>

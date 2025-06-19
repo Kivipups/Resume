@@ -17,6 +17,9 @@
 <li>
 <p dir="auto">TG бот - https://drive.google.com/drive/folders/1YYbSlwSEQjuqKSMwh9Yii8E_mB2FxBRi?usp=share_link</p>
 </li>
+<li>
+<p dir="auto">Конкурс бот - https://drive.google.com/drive/folders/1Fx2wmeihgmbdSiRQE1jKH-JwS_lHjX0b?usp=sharing</p>
+</li>
 </ul>
 
 <h1 tabindex="-1" class="heading-element" dir="auto">Twine</h1>

@@ -45,7 +45,7 @@
 ## 📌 Проекты
 
 <div align="center">
-  <img src="https://media.giphy.com/media/l0He4nkyI5cMhXzvW/giphy.gif" width="220"/>
+<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="200"/>
 </div>
 
 ### 🎓 Курсовой проект

@@ -151,7 +151,7 @@ function initContactForm() {
             hasError = true;
         }
         if (hasError) {
-            setStatus('Заполните все поля корректно.', 'error');
+            setStatus('Заполните все поля аккуратно.', 'error');
             return;
         }
 

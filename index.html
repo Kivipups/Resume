@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кирилл (Kivipups) — резюме</title>
+    <meta name="description" content="Студент-программист Кирилл. Python, PostgreSQL, Telegram-боты, автоматизация, AI.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 🏔️ Фоновый пейзаж -->
+<div class="bg-mountains" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="var(--sky-1)"/>
+                <stop offset="55%" stop-color="var(--sky-2)"/>
+                <stop offset="100%" stop-color="var(--sky-3)"/>
+            </linearGradient>
+        </defs>
+        <rect width="1440" height="900" fill="url(#skyGrad)"/>
+        <!-- Дальние горы (самый светлый слой) -->
+        <path fill="var(--mtn-1)" d="M0,340 L120,300 L260,330 L400,290 L560,340 L720,300 L900,340 L1080,300 L1240,340 L1440,310 L1440,900 L0,900 Z"/>
+        <!-- Слой 2 -->
+        <path fill="var(--mtn-2)" d="M0,420 L160,360 L300,330 L460,390 L620,350 L800,410 L980,370 L1160,420 L1340,380 L1440,410 L1440,900 L0,900 Z"/>
+        <!-- Слой 3 -->
+        <path fill="var(--mtn-3)" d="M0,510 L140,470 L300,430 L480,490 L640,450 L820,510 L1000,470 L1180,520 L1360,480 L1440,510 L1440,900 L0,900 Z"/>
+        <!-- Слой 4 -->
+        <path fill="var(--mtn-4)" d="M0,620 L180,560 L360,610 L540,560 L760,620 L980,570 L1180,620 L1380,580 L1440,610 L1440,900 L0,900 Z"/>
+        <!-- Передние горы (самый тёмный слой) -->
+        <path fill="var(--mtn-5)" d="M0,760 L200,710 L400,750 L600,700 L840,760 L1080,720 L1280,770 L1440,740 L1440,900 L0,900 Z"/>
+    </svg>
+</div>
+
+<!-- Текстурные слои -->
+<div class="bg-texture" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<header class="header">
+    <nav class="nav container">
+        <a href="#hero" class="nav__logo">K<span>.</span></a>
+        <ul class="nav__list">
+            <li><a href="#projects">Проекты</a></li>
+            <li><a href="#about">Обо мне</a></li>
+            <li><a href="#skills">Навыки</a></li>
+            <li><a href="#education">Образование</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="nav__actions">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему" title="Сменить тему">
+                <span class="theme-toggle__icon">🌙</span>
+            </button>
+            <button class="nav__burger" id="burger" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+</header>
+
+<section class="hero" id="hero">
+    <div class="container hero__content">
+        <div class="profile reveal">
+            <div class="profile__avatar-wrap">
+                <div class="profile__avatar">
+                    <img src="https://github.com/Kivipups.png" alt="Аватар Кирилла">
+                </div>
+                <span class="profile__status" title="Онлайн"></span>
+            </div>
+            <h1 class="profile__name">Кирилл</h1>
+            <p class="profile__username">Kivipups · <span>he/him</span></p>
+            <p class="profile__bio">
+                Ребята я качусь на печке по этим глубоким ямкам, я вам что Емеля что ли 🐈
+            </p>
+            <div class="profile__buttons">
+                <a href="https://github.com/Kivipups" target="_blank" rel="noopener" class="btn btn--primary">GitHub</a>
+                <a href="https://t.me/monkebib" target="_blank" rel="noopener" class="btn btn--outline">Telegram</a>
+            </div>
+            <div class="profile__stats">
+                <span><strong>2</strong> followers</span>
+                <span class="dot-sep">·</span>
+                <span><strong>2</strong> following</span>
+            </div>
+            <ul class="profile__info">
+                <li><span class="profile__icon">🎓</span><span>ГБПОУ Московской области Люберецкий техникум имени Героя Советского Союза лётчика-космонавта Ю. А. Гагарина</span></li>
+                <li><span class="profile__icon">📍</span><span>Корпус Угреша</span></li>
+                <li><span class="profile__icon">🕐</span><span id="local-time">12:48 (UTC +03:00)</span></li>
+                <li><span class="profile__icon">✉️</span><a href="mailto:upupsi@inbox.ru">upupsi@inbox.ru</a></li>
+                <li><span class="profile__icon">🔗</span><a href="https://kivipups.github.io/PracticeSite/" target="_blank" rel="noopener">https://kivipups.github.io/PracticeSite/</a></li>
+                <li><span class="profile__icon">🔗</span><a href="https://t.me/monkebib" target="_blank" rel="noopener">https://t.me/monkebib</a></li>
+            </ul>
+        </div>
+    </div>
+    <a href="#projects" class="hero__scroll" aria-label="Прокрутить вниз"><span></span></a>
+</section>
+
+<section class="section section--alt" id="projects">
+    <div class="container">
+        <h2 class="section__title reveal"><span>01.</span> Проекты</h2>
+        <p class="section__subtitle reveal">
+            Загружаются напрямую с моего
+            <a href="https://github.com/Kivipups" target="_blank" rel="noopener" class="link-accent">GitHub</a>.
+            <strong>Кликните по карточке</strong>, чтобы открыть проект.
+        </p>
+
+        <div class="tabs reveal" id="project-tabs" role="tablist">
+            <button class="tab tab--active" data-filter="ai" role="tab">🤖 ИИ проекты <span class="tab__count" id="count-ai">0</span></button>
+            <button class="tab" data-filter="all" role="tab">Все <span class="tab__count" id="count-all">0</span></button>
+            <button class="tab" data-filter="Python" role="tab">🐍 Python <span class="tab__count" id="count-Python">0</span></button>
+            <button class="tab" data-filter="JavaScript" role="tab">⚡ JavaScript <span class="tab__count" id="count-JavaScript">0</span></button>
+            <button class="tab" data-filter="HTML" role="tab">🌐 HTML <span class="tab__count" id="count-HTML">0</span></button>
+            <button class="tab" data-filter="CSS" role="tab">🎨 CSS <span class="tab__count" id="count-CSS">0</span></button>
+            <button class="tab" data-filter="other" role="tab">📦 Другие <span class="tab__count" id="count-other">0</span></button>
+        </div>
+
+        <div class="projects" id="projects-container">
+            <div class="loader">
+                <div class="loader__spinner"></div>
+                <p>Загружаю проекты с GitHub...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <div class="container">
+        <h2 class="section__title reveal"><span>02.</span> Обо мне</h2>
+        <div class="about">
+            <div class="about__text reveal">
+                <p>Привет! Меня зовут <strong>Кирилл</strong>, я студент и начинающий Python-разработчик. Учусь в Люберецком техникуме им. Ю. А. Гагарина, где осваиваю backend-разработку, работу с базами данных и автоматизацию процессов.</p>
+                <p>Основной стек — <strong>Python</strong> и <strong>PostgreSQL</strong>. Пишу скрипты для генерации документов, Telegram-ботов, веб-приложения и экспериментирую с обработкой изображений. В последнее время увлёкся <strong>AI</strong>: нейросетевые фильтры, распознавание лиц, анализ текста.</p>
+                <p>В работе ценю читаемость кода, понятную архитектуру и аккуратный пользовательский опыт. Быстро разбираюсь в новых технологиях, довожу начатое до конца и не боюсь лезть в незнакомые задачи.</p>
+
+                <div class="about__facts">
+                    <div class="about__fact"><span class="about__fact-icon">🎯</span><div><strong>Цель</strong><span>Junior Python / Backend разработчик</span></div></div>
+                    <div class="about__fact"><span class="about__fact-icon">🧩</span><div><strong>Опыт</strong><span>Курсовые, практика, pet-проекты</span></div></div>
+                    <div class="about__fact"><span class="about__fact-icon">🚀</span><div><strong>Интересы</strong><span>AI, автоматизация, backend</span></div></div>
+                    <div class="about__fact"><span class="about__fact-icon">📚</span><div><strong>Учусь</strong><span>Люберецкий техникум им. Гагарина</span></div></div>
+                </div>
+            </div>
+
+            <div class="about__code reveal">
+                <div class="code-window" id="code-window">
+                    <div class="code-window__bar">
+                        <span class="dot dot--red"></span>
+                        <span class="dot dot--yellow"></span>
+                        <span class="dot dot--green"></span>
+                        <span class="code-window__title">developer.py</span>
+                    </div>
+                    <pre class="code-window__body"><code id="dev-code" aria-label="Пример кода"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--alt" id="skills">
+    <div class="container">
+        <h2 class="section__title reveal"><span>03.</span> Навыки</h2>
+        <div class="skills">
+            <div class="skills__card reveal"><h3>Языки</h3><ul><li>Python</li><li>SQL</li><li>JavaScript (базово)</li><li>HTML / CSS</li></ul></div>
+            <div class="skills__card reveal"><h3>AI / ML</h3><ul><li>OpenCV</li><li>NumPy</li><li>Pillow</li><li>Работа с изображениями</li></ul></div>
+            <div class="skills__card reveal"><h3>Инструменты</h3><ul><li>Git / GitHub</li><li>Linux CLI</li><li>Docker (базово)</li><li>VS Code / PyCharm</li></ul></div>
+            <div class="skills__card reveal"><h3>Библиотеки</h3><ul><li>aiogram / telebot</li><li>python-docx</li><li>psycopg2</li><li>requests</li></ul></div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="education">
+    <div class="container">
+        <h2 class="section__title reveal"><span>04.</span> Образование</h2>
+        <div class="timeline">
+            <div class="timeline__item reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__card">
+                    <span class="timeline__date">Настоящее время</span>
+                    <h3>ГБПОУ Московской области</h3>
+                    <p class="timeline__place">Люберецкий техникум имени Героя Советского Союза лётчика-космонавта Ю. А. Гагарина</p>
+                    <p class="timeline__desc">Осваиваю программирование, базы данных и разработку ПО. Пишу курсовые и практические проекты на Python.</p>
+                    <div class="timeline__tags"><span>Python</span><span>PostgreSQL</span><span>Git</span><span>Алгоритмы</span></div>
+                </div>
+            </div>
+            <div class="timeline__item reveal">
+                <div class="timeline__dot"></div>
+                <div class="timeline__card">
+                    <span class="timeline__date">Учебные работы</span>
+                    <h3>Курсовые и практика</h3>
+                    <p class="timeline__desc">AI-фильтры для изображений, распознавание лиц, анализ текста, генерация документов и Telegram-боты. Все работы доступны в репозиториях на GitHub.</p>
+                    <div class="timeline__tags"><span>FilterAI</span><span>FaceRecognize</span><span>TextAnalyzer</span><span>DocProgram</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--alt" id="contact">
+    <div class="container">
+        <h2 class="section__title reveal"><span>05.</span> Контакты</h2>
+        <p class="contact__text reveal">
+            Открыт для предложений, стажировок и совместных проектов.
+            Напишите мне — я отвечу в течение дня.
+        </p>
+
+        <div class="contact-grid">
+            <div class="contact__links contact__links--stack">
+                <a href="https://github.com/Kivipups" target="_blank" rel="noopener" class="contact__link reveal">
+                    <span class="contact__icon">GH</span><div><strong>GitHub</strong><p>@Kivipups</p></div>
+                </a>
+                <a href="https://t.me/monkebib" target="_blank" rel="noopener" class="contact__link reveal">
+                    <span class="contact__icon">TG</span><div><strong>Telegram</strong><p>@monkebib</p></div>
+                </a>
+                <a href="mailto:upupsi@inbox.ru" class="contact__link reveal">
+                    <span class="contact__icon">@</span><div><strong>Email</strong><p>upupsi@inbox.ru</p></div>
+                </a>
+                <a href="https://kivipups.github.io/PracticeSite/" target="_blank" rel="noopener" class="contact__link reveal">
+                    <span class="contact__icon">🌐</span><div><strong>Сайт-практика</strong><p>kivipups.github.io/PracticeSite</p></div>
+                </a>
+            </div>
+
+            <form class="contact-form reveal" id="contact-form" novalidate>
+                <h3 class="contact-form__title">
+                    <span class="contact-form__title-icon">✉️</span>
+                    Обратная связь
+                </h3>
+                <p class="contact-form__hint">Заполните форму — сообщение уйдёт мне на почту.</p>
+
+                <div class="contact-form__row">
+                    <label class="contact-form__field">
+                        <span class="contact-form__label">Имя</span>
+                        <input type="text" name="name" placeholder="Ваше имя" required maxlength="60">
+                    </label>
+                    <label class="contact-form__field">
+                        <span class="contact-form__label">Email</span>
+                        <input type="email" name="email" placeholder="you@example.com" required maxlength="80">
+                    </label>
+                </div>
+
+                <label class="contact-form__field">
+                    <span class="contact-form__label">Сообщение</span>
+                    <textarea name="message" rows="5" placeholder="Расскажите о проекте, вакансии или предложении..." required maxlength="2000"></textarea>
+                </label>
+
+                <button type="submit" class="btn btn--primary contact-form__submit" id="form-submit">
+                    <span class="contact-form__submit-text">Отправить сообщение</span>
+                    <span class="contact-form__submit-spinner" aria-hidden="true"></span>
+                </button>
+
+                <p class="contact-form__status" id="form-status" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p>© <span id="year"></span> Кирилл · Kivipups · Сделано с ❤️ и чистым кодом</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

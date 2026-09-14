@@ -49,6 +49,30 @@ const IMAGE_CACHE = new Map();
 const AI_FOLDER_CACHE = new Map();
 
 /* =====================================================
+   💾 КЭШ (localStorage)
+===================================================== */
+const CACHE_PREFIX = 'kivi_v1_';
+const REPOS_TTL   = 60 * 60 * 1000;       // 1 час
+const IMG_TTL     = 24 * 60 * 60 * 1000;  // 24 часа
+const FOLDER_TTL  = 24 * 60 * 60 * 1000;  // 24 часа
+
+function cacheGet(key) {
+    try {
+        const raw = localStorage.getItem(CACHE_PREFIX + key);
+        if (!raw) return null;
+        return JSON.parse(raw);
+    } catch { return null; }
+}
+function cacheSet(key, value) {
+    try {
+        localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ t: Date.now(), v: value }));
+    } catch {}
+}
+function cacheFresh(entry, ttl) {
+    return entry && (Date.now() - entry.t) < ttl;
+}
+
+/* =====================================================
    ⌨️ АНИМАЦИЯ ПЕЧАТАНИЯ КОДА
 ===================================================== */
 function startCodeTyping(el, tokens) {
@@ -79,13 +103,11 @@ function startCodeTyping(el, tokens) {
         }
         el.appendChild(currentSpan);
     }
-
     function appendChar(ch, cls) {
         ensureSpan(cls);
         currentSpan.textContent += ch;
         el.appendChild(cursor);
     }
-
     function tick() {
         if (i >= chars.length) {
             setTimeout(() => cursor.classList.add('hidden'), 3000);
@@ -214,15 +236,26 @@ function initCardClick() {
 }
 
 /* =====================================================
-   GITHUB API
+   GITHUB API (с кэшем)
 ===================================================== */
+
+/* Картинка-превью проекта (из README или og:image) — с кэшем */
 async function fetchRepoImage(repoName) {
     if (IMAGE_CACHE.has(repoName)) return IMAGE_CACHE.get(repoName);
     if (CONFIG.projectImages[repoName]) {
-        const url = CONFIG.projectImages[repoName];
-        IMAGE_CACHE.set(repoName, url);
-        return url;
+        IMAGE_CACHE.set(repoName, CONFIG.projectImages[repoName]);
+        return CONFIG.projectImages[repoName];
     }
+
+    const key = 'img_' + repoName;
+    const cached = cacheGet(key);
+    if (cacheFresh(cached, IMG_TTL)) {
+        IMAGE_CACHE.set(repoName, cached.v);
+        return cached.v;
+    }
+
+    const fallback = `https://opengraph.githubassets.com/1/${CONFIG.githubUsername}/${repoName}`;
+
     try {
         const res = await fetch(`https://api.github.com/repos/${CONFIG.githubUsername}/${repoName}/readme`);
         if (res.ok) {
@@ -230,57 +263,98 @@ async function fetchRepoImage(repoName) {
             const content = atob(data.content.replace(/\s/g, ''));
             let m = content.match(/!\[[^\]]*\]\(\s*(https?:\/\/[^\s)]+)\s*\)/);
             if (!m) m = content.match(/<img[^>]+src=["'](https?:\/\/[^"']+)["']/);
-            if (m) { IMAGE_CACHE.set(repoName, m[1]); return m[1]; }
+            if (m) {
+                IMAGE_CACHE.set(repoName, m[1]);
+                cacheSet(key, m[1]);
+                return m[1];
+            }
         }
-    } catch {}
-    const fallback = `https://opengraph.githubassets.com/1/${CONFIG.githubUsername}/${repoName}`;
+    } catch { /* ignore */ }
+
     IMAGE_CACHE.set(repoName, fallback);
     return fallback;
 }
 
+/* Картинки из папки AI-проекта — с кэшем */
 async function fetchFolderImages(folder) {
     if (AI_FOLDER_CACHE.has(folder)) return AI_FOLDER_CACHE.get(folder);
+
+    const key = 'folder_' + folder;
+    const cached = cacheGet(key);
+    if (cacheFresh(cached, FOLDER_TTL)) {
+        AI_FOLDER_CACHE.set(folder, cached.v);
+        return cached.v;
+    }
+
     try {
         const res = await fetch(`https://api.github.com/repos/${CONFIG.githubUsername}/${CONFIG.resumeRepo}/contents/${folder}`);
-        if (!res.ok) { AI_FOLDER_CACHE.set(folder, []); return []; }
-        const files = await res.json();
-        const images = files
-            .filter(f => f.type === 'file' && /\.(png|jpe?g|gif|webp|bmp)$/i.test(f.name))
-            .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
-            .map(f => ({ name: f.name, url: f.download_url, path: f.path }));
-        AI_FOLDER_CACHE.set(folder, images);
-        return images;
-    } catch { AI_FOLDER_CACHE.set(folder, []); return []; }
+        if (res.ok) {
+            const files = await res.json();
+            const images = files
+                .filter(f => f.type === 'file' && /\.(png|jpe?g|gif|webp|bmp)$/i.test(f.name))
+                .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+                .map(f => ({ name: f.name, url: f.download_url, path: f.path }));
+            AI_FOLDER_CACHE.set(folder, images);
+            cacheSet(key, images);
+            return images;
+        }
+    } catch { /* ignore */ }
+
+    // сеть упала — используем устаревший кэш, если есть
+    if (cached) {
+        AI_FOLDER_CACHE.set(folder, cached.v);
+        return cached.v;
+    }
+    AI_FOLDER_CACHE.set(folder, []);
+    return [];
+}
+
+function sortRepos(repos) {
+    return repos
+        .filter(r => !r.fork && !CONFIG.exclude.includes(r.name))
+        .sort((a, b) => {
+            const aP = CONFIG.pinnedFirst.indexOf(a.name);
+            const bP = CONFIG.pinnedFirst.indexOf(b.name);
+            if (aP !== -1 && bP !== -1) return aP - bP;
+            if (aP !== -1) return -1;
+            if (bP !== -1) return 1;
+            if (b.stargazers_count !== a.stargazers_count)
+                return b.stargazers_count - a.stargazers_count;
+            return new Date(b.updated_at) - new Date(a.updated_at);
+        });
 }
 
 async function loadProjects() {
-    try {
-        const response = await fetch(GITHUB_API);
-        if (!response.ok) throw new Error('GitHub API error: ' + response.status);
-        const repos = await response.json();
+    const cacheKey = 'repos';
+    const cached = cacheGet(cacheKey);
 
-        ALL_REPOS = repos
-            .filter(r => !r.fork && !CONFIG.exclude.includes(r.name))
-            .sort((a, b) => {
-                const aP = CONFIG.pinnedFirst.indexOf(a.name);
-                const bP = CONFIG.pinnedFirst.indexOf(b.name);
-                if (aP !== -1 && bP !== -1) return aP - bP;
-                if (aP !== -1) return -1;
-                if (bP !== -1) return 1;
-                if (b.stargazers_count !== a.stargazers_count)
-                    return b.stargazers_count - a.stargazers_count;
-                return new Date(b.updated_at) - new Date(a.updated_at);
-            });
-
-        await Promise.all([
-            ...ALL_REPOS.map(r => fetchRepoImage(r.name)),
-            ...CONFIG.aiProjects.map(p => fetchFolderImages(p.folder)),
-        ]);
-
+    // 1. Свежий кэш — рендерим сразу, без сетевых запросов
+    if (cacheFresh(cached, REPOS_TTL)) {
+        ALL_REPOS = sortRepos(cached.v);
         updateCounters();
         renderAIProjects();
-    } catch (error) {
-        console.error('Ошибка загрузки проектов:', error);
+        return;
+    }
+
+    // 2. Пробуем API
+    try {
+        const res = await fetch(GITHUB_API);
+        if (!res.ok) throw new Error('GitHub API ' + res.status);
+        const repos = await res.json();
+        cacheSet(cacheKey, repos);
+        ALL_REPOS = sortRepos(repos);
+        updateCounters();
+        renderAIProjects();
+    } catch (err) {
+        console.error('Ошибка загрузки проектов:', err);
+        // 3. Устаревший кэш — тоже сгодится
+        if (cached) {
+            ALL_REPOS = sortRepos(cached.v);
+            updateCounters();
+            renderAIProjects();
+            return;
+        }
+        // 4. Совсем ничего нет — показываем заглушку
         container.innerHTML = `
             <div class="empty-state">
                 <p>Не удалось загрузить проекты с GitHub.<br><br>
@@ -321,7 +395,9 @@ function renderProjects(repos) {
         const langColor = CONFIG.languageColors[repo.language] || 'var(--accent)';
         const stars = repo.stargazers_count ? `<span class="project-card__stars">★ ${repo.stargazers_count}</span>` : '';
         const homepageLink = repo.homepage ? `<a href="${repo.homepage}" target="_blank" rel="noopener" title="Живая демо">🌐</a>` : '';
-        const imgSrc = IMAGE_CACHE.get(repo.name) || '';
+        // Показываем сразу fallback-картинку (og:image, без API), потом лениво подменим на картинку из README
+        const fallback = `https://opengraph.githubassets.com/1/${CONFIG.githubUsername}/${repo.name}`;
+        const imgSrc = IMAGE_CACHE.get(repo.name) || fallback;
 
         card.innerHTML = `
             <div class="project-card__image">
@@ -344,20 +420,35 @@ function renderProjects(repos) {
                 </div>
             </div>
         `;
+
         const img = card.querySelector('img');
-        if (img) {
-            img.addEventListener('load', () => img.classList.add('loaded'));
-            if (img.complete) img.classList.add('loaded');
+        img.addEventListener('load', () => img.classList.add('loaded'));
+        if (img.complete) img.classList.add('loaded');
+
+        // Лениво подтягиваем «настоящую» картинку из README (только 1 запрос, закэшируется на сутки)
+        if (!IMAGE_CACHE.has(repo.name)) {
+            fetchRepoImage(repo.name).then(realSrc => {
+                if (!realSrc || realSrc === fallback) return;
+                const temp = new Image();
+                temp.onload = () => { img.src = realSrc; };
+                temp.src = realSrc;
+            });
         }
+
         container.appendChild(card);
     });
 }
 
-function renderAIProjects() {
+async function renderAIProjects() {
     container.innerHTML = '';
 
-    CONFIG.aiProjects.forEach((project, i) => {
-        const images = AI_FOLDER_CACHE.get(project.folder) || [];
+    // параллельно тянем картинки из папок (первый раз — с API, дальше — из кэша)
+    const data = await Promise.all(CONFIG.aiProjects.map(async (project, i) => {
+        const images = await fetchFolderImages(project.folder);
+        return { project, images, i };
+    }));
+
+    data.forEach(({ project, images, i }) => {
         const hasImages = images.length > 0;
         const folderUrl = `https://github.com/${CONFIG.githubUsername}/${CONFIG.resumeRepo}/tree/main/${project.folder}`;
 

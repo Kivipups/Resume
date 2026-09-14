@@ -357,8 +357,8 @@ JavaScript      ████████░░░░░░░░░░░░░�
 
 <br/>
 
-<a href="mailto:upupsi@inbox.ru">
-  <img src="https://img.shields.io/badge/Email-upupsi%40inbox.ru-EA4335?style=for-the-badge&logo=gmail&logoColor=white" />
+<a href="mailto:upupsi@gmail.com">
+  <img src="https://img.shields.io/badge/Email-upupsi%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" />
 </a>
 <a href="https://t.me/monkebib">
   <img src="https://img.shields.io/badge/Telegram-@monkebib-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
